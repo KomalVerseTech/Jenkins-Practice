@@ -8,10 +8,8 @@ pipeline {
 		}
 		stage('Build'){
 			steps {
-				sh 'echo "Build started"'
-				sh 'date'
-				sh 'pwd'
-				sh 'ls -la'
+				sh 'echo "Hello Jenkins" > output.txt'
+				sh 'cat output.txt'
 			}
 		}
 		stage('Test') {
@@ -19,5 +17,8 @@ pipeline {
 				echo 'Testing applicationn'
 			}
 		}
+		stage('Archive') {
+			steps {
+				archiveArtifacts artifacts: 'output.txt'
 	}
 }
