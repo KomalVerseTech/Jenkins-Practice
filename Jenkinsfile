@@ -8,7 +8,10 @@ pipeline {
 		}
 		stage('Build'){
 			steps {
-				echo 'Building an application'
+				sh 'echo "Build started"'
+				sh 'date'
+				sh 'pwd'
+				sh 'ls -la'
 			}
 		}
 		stage('Test') {
