@@ -1,19 +1,19 @@
 pipeline {
-	agent any
+	agent any 
 	stages {
-	stage('Checkout') {
-	steps {
-	echo 'Downloading Code'
-}
-}
+		stage('checkout') {
+			steps {
+				echo 'Downloading source code '
+			}
+		}
 		stage('Build'){
 			steps {
-				echo 'Building Application'
-}
-}
-		stage('Deploy'){
+				echo 'Building an application'
+			}
+		}
+		stage('Test') {
 			steps {
-				echo 'Deploying Application'
+				echo 'Testing applicationn'
 			}
 		}
 	}
