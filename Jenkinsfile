@@ -1,10 +1,20 @@
 pipeline {
 	agent any
 	stages {
-	stage('Welcome') {
+	stage('Checkout') {
 	steps {
-	echo 'Welcome to Jenkinsfile'
+	echo 'Downloading Code'
 }
 }
+		stage('Build'){
+			steps {
+				echo 'Building Application'
 }
+}
+		stage('Deploy'){
+			steps {
+				echo 'Deploying Application'
+			}
+		}
+	}
 }
