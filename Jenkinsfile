@@ -22,3 +22,5 @@ pipeline {
 				archiveArtifacts artifacts: 'output.txt'
 	}
 }
+	}
+}
