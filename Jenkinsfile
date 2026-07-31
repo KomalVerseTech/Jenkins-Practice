@@ -8,18 +8,17 @@ pipeline {
 		}
 		stage('Build'){
 			steps {
-				sh 'echo "Hello Jenkins" > output.txt'
-				sh 'cat output.txt'
+				sh 'mvn clean package'
 			}
 		}
-		stage('Test') {
+		stage('Verify') {
 			steps {
-				echo 'Testing applicationn'
+				echo 'ls -l target'
 			}
 		}
 		stage('Archive') {
 			steps {
-				archiveArtifacts artifacts: 'output.txt'
+				archiveArtifacts artifacts: 'target/*.jar'
 	}
 }
 	}
@@ -28,10 +27,10 @@ pipeline {
 			echo 'Pipeline Finished'
 }
 		success {
-			echo 'Build Successful'
+			echo 'Maven Build Successful'
 		}
 		failure {
-			echo 'Build Failed'
+			echo 'Maven Build Failed'
 		}
 	}
 }
