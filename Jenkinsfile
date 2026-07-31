@@ -1,37 +1,36 @@
 pipeline {
 	agent any 
 	stages {
-		stage('checkout') {
-			steps {
-				echo 'Downloading source code '
-			}
-		}
 		stage('Build'){
 			steps {
-				sh 'mvn clean package'
+				sh 'mvn clean compile'
 			}
 		}
-		stage('Verify') {
+		stage('Test') {
 			steps {
-				echo 'ls -l target'
+				sh 'mvn test'
 			}
 		}
-		stage('Archive') {
+		stage('Package') {
 			steps {
-				archiveArtifacts artifacts: 'target/*.jar'
+				sh 'mvn package'
 	}
 }
+    stage('Archive') {
+      steps {
+        archiveArtifacts artifacts: 'target/*.jar'
+      }
+    }
 	}
 	post {
 		always {
-			echo 'Pipeline Finished'
+			echo 'Pipeline execution completed'
 }
 		success {
-			echo 'Maven Build Successful'
+			echo 'Build, Test and Package Successful'
 		}
 		failure {
-			echo 'Maven Build Failed'
+			echo 'Pipelinne Failed - check console output'
 		}
 	}
 }
-
