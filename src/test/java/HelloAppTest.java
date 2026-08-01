@@ -6,6 +6,6 @@ public class HelloAppTest {
 
 	@Test
 	void testAddition() {
-		assertEquals(5, 2 + 3);
+		assertEquals(10, 2 + 3);
 	}
 }
