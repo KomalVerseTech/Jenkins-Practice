@@ -1,31 +1,30 @@
 pipeline {
-	agent any
-	parameters {
-		choice(
-			name: 'ENV',
-			choices: [
-				'DEV',
-				'QA',
-				'PROD'
-				],
-			description: 'Select Environment'
-			)
-	}
-	stages {
-		stage('Build') {
-			steps {
-				echo "Building..."
-			}
-		}
-		stage('Deploy') {
-			when {
-				expression {
-					return params.ENV == "PROD"
-				}
-			}
-			steps {
-				echo "Deploying to Production"
-			}
-		}
-	}
+agent any
+stages {
+stage('Compile') {
+steps {
+	echo "Compiling.."
+}
+}
+stage('Test') {
+steps {
+	echo "Running Tests..."
+}
+}
+stage('Approval') {
+steps {
+	input message: "All tests passed. Continue deployment?", ok: "Approve"
+}
+}
+stage('Deploy') {
+steps {
+	echo "Application Deployed Successfully."
+}
+}
+}
+post {
+	success {
+	echo "Pipeline Completed."
+}
+}
 }
