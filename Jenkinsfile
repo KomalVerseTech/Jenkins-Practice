@@ -1,27 +1,31 @@
 pipeline {
 	agent any
 	parameters {
-		booleanParam(
-			name: 'DEPLOY',
-			defaultValue: true,
-			description: 'Deploy Application?'
-)
-}
-stages {
-	stage('Build') {
-		steps {
-			echo "Building Application ..."
-}
-}
-stage('Deploy') {
- when {
-	expression {
-		return params.DEPLOY
-}
-}
-steps {
-	echo "Deploying Application..."
-}
-}
-}
+		choice(
+			name: 'ENV',
+			choices: [
+				'DEV',
+				'QA',
+				'PROD'
+				],
+			description: 'Select Environment'
+			)
+	}
+	stages {
+		stage('Build') {
+			steps {
+				echo "Building..."
+			}
+		}
+		stage('Deploy') {
+			when {
+				expression {
+					return params.ENV == "PROD"
+				}
+			}
+			steps {
+				echo "Deploying to Production"
+			}
+		}
+	}
 }
