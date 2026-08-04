@@ -1,41 +1,27 @@
 pipeline {
-	agent any 
-	stages {
-		stage('Clean') {
-			steps {
-				sh 'mvn clean'
-			}
-		}
-		stage('Build'){
-			steps {
-				sh 'mvn compile'
-			}
-		}
-		stage('Test') {
-			steps {
-				sh 'mvn test'
-			}
-		}
-		stage('Package') {
-			steps {
-				sh 'mvn package'
-	}
+	agent any
+	parameters {
+		booleanParam(
+			name: 'DEPLOY',
+			defaultValue: true,
+			description: 'Deploy Application?'
+)
 }
-    stage('Archive') {
-      steps {
-        archiveArtifacts artifacts: 'target/*.jar'
-      }
-    }
-	}
-	post {
-		always {
-			echo 'Pipeline execution completed'
+stages {
+	stage('Build') {
+		steps {
+			echo "Building Application ..."
 }
-		success {
-			echo 'Build, Test and Package Successful'
-		}
-		failure {
-			echo 'Pipelinne Failed - check console output'
-		}
-	}
+}
+stage('Deploy') {
+ when {
+	expression {
+		return params.DEPLOY
+}
+}
+steps {
+	echo "Deploying Application..."
+}
+}
+}
 }
